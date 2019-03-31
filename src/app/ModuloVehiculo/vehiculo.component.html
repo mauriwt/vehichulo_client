@@ -1,0 +1,230 @@
+<div id="content">
+  <wt-shuyai *ngIf="cargando"></wt-shuyai>
+  <sa-widgets-grid>
+    <div class="row">
+      <article class="col-xs-12">
+        <sa-widget id="wid-mi-li-0" [editbutton]="false" [colorbutton]="false" [togglebutton]="false" [deletebutton]="false"
+          [fullscreenbutton]="false" [custombutton]="false" [collapsed]="false" [sortable]="false">
+          <header>
+          </header>
+          <div class="widget-body">
+            <div class="text-center">
+              <div class="pull-left header-button">
+                <a class="btn btn-primary" (click)="open('mdgVehiculo')">Nuevo</a>
+              </div>
+              <h3>Vehículos</h3>
+            </div>
+            <div *ngIf="!cargando">
+              <table class="table table-bordered table-hover">
+                <thead class="thead-dark">
+                  <tr>
+                    <th class="acciones">Acciones</th>
+                    <th>Tipo vehículo</th>
+                    <th>Marca</th>
+                    <th>Modelo</th>
+                    <th>Año de Fabricación</th>
+                    <th>Capacidad de tanque (litros)</th>
+                    <th>Nro. de pasajeros</th>
+                    <th>Capacidad de carga</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let s of vehiculos; let i = index">
+                    <td>
+                      <a placement="top" tooltip="Modificar registro" class="fa fa-pencil fa-lg text-success" (click)="getFila(s)"></a>
+                    </td>
+                    <td><b>{{s.tipoVehiculoBean.tipo}}</b></td>
+                    <td>{{s.marca}} </td>
+                    <td>{{s.modelo}} </td>
+                    <td>{{s.anioFabricacion}} </td>
+                    <td>{{s.capacidadTanque}} </td>
+                    <td>{{s.nroPasajeros}}</td>
+                    <td>{{s.capacidadCarga}}</td>
+                  </tr>
+                  <tr>
+                    <th rowspan="2" scope="rowgroup" colspan="5">Para llenar todos los abastos se requiere de:</th>
+                    <th scope="row">{{litros}} litros de combustible ó </th>
+                  </tr>
+                  <tr>
+                    <th scope="row">{{calcular(litros)}} galones de combustible</th>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </sa-widget>
+      </article>
+    </div>
+  </sa-widgets-grid>
+  <div id="mdgVehiculo" bsModal #mdTurno="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"
+    [config]="{backdrop: 'static',  keyboard: false}">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <a class="pull-right" routerLink="/vehiculo" (click)="cancelar('frmVehiculo')"><i class="fa fa-user-plus"></i>Resgistar
+            vehiculo</a>
+          <h4 class="modal-title">{{vehiculo.id ? 'Editar registro' : 'Registrar vehiculo'}} </h4>
+        </div>
+        <div class="modal-body">
+          <wt-shuyai *ngIf="cargando"></wt-shuyai>
+          <div class="row">
+            <div class="col-lg-12">
+              <form id="frmVehiculo" #form [formGroup]="formulario" class="form-horizontal">
+                <div class="panel panel-default">
+                  <div class="panel-heading text-center "><b>Datos del vehiculo</b></div>
+                  <div class="panel-body">
+                    <div class="row">
+                      <div class="col-lg-6">
+                        <fieldset>
+                          <div class="form-group">
+                            <label class="col-lg-4 text-letf">
+                              <b>Tipo de vehiculo:
+                                <b class="text-danger"> *</b>
+                              </b>
+                            </label>
+                            <div class="col-lg-8">
+                              <select class="form-control" id="tipoVehiculo" formControlName="tipoVehiculo" [(ngModel)]="tipoSelected"
+                                required>
+                                <option *ngFor="let c of tpVehiculos" value="{{c.id}}">{{c.tipo}}</option>
+                              </select>
+                            </div>
+                            <label *ngIf="formErrors.tipoVehiculo" class="error-msg">
+                              <i class="fa fa-times-circle"></i>
+                              {{ formErrors.tipoVehiculo }}
+                            </label>
+                          </div>
+                        </fieldset>
+                      </div>
+                      <div class="col-lg-6">
+                        <fieldset>
+                          <div class="form-group">
+                            <label class="col-lg-4 text-letf"><b>Marca:</b>
+                              <b class="text-danger">*</b>
+                            </label>
+                            <div class="col-lg-8">
+                              <input [(ngModel)]="vehiculo.marca" id="marca" type="text" class="form-control"
+                                formControlName="marca" required>
+                            </div>
+                            <label *ngIf="formErrors.marca" class="error-msg">
+                              <i class="fa fa-times-circle"></i>
+                              {{ formErrors.marca }}
+                            </label>
+                          </div>
+                        </fieldset>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-6">
+                        <fieldset>
+                          <div class="form-group">
+                            <label class="col-lg-4 text-letf"><b>Modelo:</b>
+                              <b class="text-danger"></b>
+                            </label>
+                            <div class="col-lg-8">
+                              <input [(ngModel)]="vehiculo.modelo" id="modelo" type="text" class="form-control"
+                                formControlName="modelo">
+                            </div>
+                            <label *ngIf="formErrors.modelo" class="error-msg">
+                              <i class="fa fa-times-circle"></i>
+                              {{ formErrors.modelo }}
+                            </label>
+                          </div>
+                        </fieldset>
+                      </div>
+                      <div class="col-lg-6">
+                        <fieldset>
+                          <div class="form-group">
+                            <label class="col-lg-4 text-letf"><b>Año de Fabricación:</b>
+                              <b class="text-danger">*</b>
+                            </label>
+                            <div class="col-lg-8">
+                              <input type="text" id="anioFabricacion" formControlName="anioFabricacion" class="form-control"
+                                [(ngModel)]="vehiculo.anioFabricacion">
+                            </div>
+                            <label *ngIf="formErrors.anioFabricacion" class="error-msg">
+                              <i class="fa fa-times-circle"></i>
+                              {{ formErrors.anioFabricacion }}
+                            </label>
+                          </div>
+                        </fieldset>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-6">
+                        <fieldset>
+                          <div class="form-group">
+                            <label class="col-lg-4 text-letf"><b>Capacidad de tanque(litros):</b>
+                              <b class="text-danger">*</b>
+                            </label>
+                            <div class="col-lg-8">
+                              <input type="text" id="capacidadTanque" formControlName="capacidadTanque" class="form-control"
+                                [(ngModel)]="vehiculo.capacidadTanque">
+                            </div>
+                            <label *ngIf="formErrors.capacidadTanque" class="error-msg">
+                              <i class="fa fa-times-circle"></i>
+                              {{ formErrors.capacidadTanque }}
+                            </label>
+                          </div>
+                        </fieldset>
+                      </div>
+                      <div class="col-lg-6">
+                        <fieldset>
+                          <div class="form-group">
+                            <label class="col-lg-4 text-letf"><b>Nro de pasajeros:</b>
+                              <b class="text-danger"></b>
+                            </label>
+                            <div class="col-lg-8">
+                              <input [(ngModel)]="vehiculo.nroPasajeros" id="nroPasajeros" type="text" class="form-control"
+                                formControlName="nroPasajeros">
+                            </div>
+                            <label *ngIf="formErrors.nroPasajeros" class="error-msg">
+                              <i class="fa fa-times-circle"></i>
+                              {{ formErrors.nroPasajeros }}
+                            </label>
+                          </div>
+                        </fieldset>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-6">
+                        <fieldset>
+                          <div class="form-group">
+                            <label class="col-lg-4 text-letf"><b>Capacidad de carga:</b>
+                              <b class="text-danger">*</b>
+                            </label>
+                            <div class="col-lg-8">
+                              <input [(ngModel)]="vehiculo.capacidadCarga" id="capacidadCarga" type="text" class="form-control"
+                                formControlName="capacidadCarga" required>
+                            </div>
+                            <label *ngIf="formErrors.capacidadCarga" class="error-msg">
+                              <i class="fa fa-times-circle"></i>
+                              {{ formErrors.capacidadCarga }}
+                            </label>
+                          </div>
+                        </fieldset>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <fieldset>
+                  <div class="form-actions">
+                    <div class="pull-left">
+                      <div class="col-md-12">
+                        <button class="btn btn-primary" (click)="smbox()" [disabled]="!formulario.valid">
+                          Guardar
+                        </button>
+                        <button class="btn btn-danger" type="button" (click)="cancelar('frmPersona')">
+                          Cancelar
+                        </button>
+                      </div>
+                    </div>
+                    <div style="clear:both"></div>
+                  </div>
+                </fieldset>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

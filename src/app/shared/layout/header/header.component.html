@@ -1,0 +1,79 @@
+<header id="header">
+  <div id="logo-group">
+
+    <!-- PLACE YOUR LOGO HERE -->
+    <span id="logo" style="margin-top: 2px;"> <img src="assets/img/oncedev.png" style="height: 45px;width: auto;"  alt="Zede"> </span>
+    <!-- END LOGO PLACEHOLDER -->
+
+    <!-- Note: The activity badge color changes when clicked and resets the number to 0
+    Suggestion: You may want to set a flag when this happens to tick off all checked messages / notifications -->
+    <sa-activities></sa-activities>
+  </div>
+
+  <div class="project-context hidden-xs">
+    <span class="label">SISTEMA:</span>
+    <span class="project-selector">Vehículos</span>
+  </div>
+  
+
+
+  <!-- pulled right: nav area -->
+  <div class="pull-right">
+
+    <sa-collapse-menu></sa-collapse-menu>
+
+    <!-- #MOBILE -->
+    <!-- Top menu profile link : this shows only when top menu is active -->
+    <ul id="mobile-profile-img" class="header-dropdown-list hidden-xs padding-5">
+      <li class="">
+        <ul class="dropdown-menu pull-right">
+          <li>
+            <a (click)="(null)" class="padding-10 padding-top-0 padding-bottom-0"><i
+              class="fa fa-cog"></i> Setting</a>
+          </li>
+          <li class="divider"></li>
+          <li>
+            <a routerLink="/app-views/profile" class="padding-10 padding-top-0 padding-bottom-0"> <i
+              class="fa fa-user"></i>
+              <u>P</u>rofile</a>
+          </li>
+          <li class="divider"></li>
+          <li>
+            <a (click)="(null)" class="padding-10 padding-top-0 padding-bottom-0"
+               data-action="toggleShortcut"><i class="fa fa-arrow-down"></i> <u>S</u>hortcut</a>
+          </li>
+          <li class="divider"></li>
+          <li>
+            <a (click)="(null)" class="padding-10 padding-top-0 padding-bottom-0"
+               data-action="launchFullscreen"><i class="fa fa-arrows-alt"></i> Full <u>S</u>creen</a>
+          </li>
+          <li class="divider"></li>
+          <li>
+            <a (click)="logout()" class="padding-10 padding-top-5 padding-bottom-5" data-action="userLogout"><i
+              class="fa fa-sign-out fa-lg"></i> <strong><u>L</u>ogout</strong></a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+
+    <!-- logout button -->
+    <fbg-logout></fbg-logout>
+    <!-- end logout button -->
+
+    <!-- search mobile button (this is hidden till mobile view port) -->
+    <div id="search-mobile" class="btn-header transparent pull-right">
+      <span> <a (click)="toggleSearchMobile()" title="Search"><i class="fa fa-search"></i></a> </span>
+    </div>
+
+    <!-- fullscreen button -->
+    <sa-full-screen></sa-full-screen>
+    <!-- end fullscreen button -->
+
+    <!-- #Voice Command: Start Speech -->
+    <sa-speech-button></sa-speech-button>
+    <!-- end voice command -->
+
+  </div>
+  <!-- end pulled right: nav area -->
+
+</header>

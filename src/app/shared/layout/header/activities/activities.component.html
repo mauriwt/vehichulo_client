@@ -1,0 +1,89 @@
+<span id="activity" class="activity-dropdown" (click)="onToggle()">
+  <i class="fa fa-bell"></i>
+  <b class="badge bg-color-red" *ngIf="count" (click)="vaciarNotificacionesCount()">{{count}}</b>
+</span>
+
+<div class="ajax-dropdown" #dropdown>
+  <div class="btn-group btn-group-justified" data-toggle="buttons">
+    <label [ngClass]="{
+      'btn btn-default': true,
+      active: tipoNotificacionActual == 'Nuevas'
+    }" (click)="setTipoNotificacion('Nuevas');">
+      <input type="radio" name="tipo"/>
+      Nuevas
+    </label>
+    <label [ngClass]="{
+      'btn btn-default': true,
+      active: tipoNotificacionActual == 'Archivadas'
+    }" (click)="setTipoNotificacion('Archivadas');">
+      <input type="radio" name="tipo" (click)="updateEvent('Archivadas')"/>
+      Archivadas
+    </label>
+
+  </div>
+
+  <!-- notification content -->
+   <div class="ajax-notifications custom-scroll">
+      <ul class="notification-body" *ngIf="tipoNotificacionActual =='Nuevas'">
+          <li class="pointer" 
+          *ngFor="let item of notificacionesNuevas;let index = index" 
+          [@visibilityChanged]="item.notEstado ? 'shown':'hidden'" 
+          (click)="leerNotificacion(index);redirectTo(item);onToggle()">
+            <span class="padding-10">
+              <span class="pull-right semi-bold"
+                          [ngClass]="{
+                            'pull-right': true,
+                            'semi-bold':true
+                            }">
+                      <span>
+                        <i class="fa {{item.notReferenciaDocumentoCodigo ? 'fa-external-link':'fa-newspaper-o'}}"></i>
+                      </span>
+                    </span>
+                <span>{{item.notMensaje}}<br/>
+                  <span class="pull-right font-xs text-muted"><i>{{item.notFecha | date: 'medium'}}</i></span>
+                </span>
+            </span>
+          </li>
+      </ul>
+      <ul class="notification-body" *ngIf="tipoNotificacionActual =='Archivadas'">
+          <li class="pointer" *ngFor="let item of notificacionesLeidas; let index = index"
+          clickEvent="borrarNotificacion">
+            <span class="padding-10">
+              <span class="pull-right semi-bold text-danger" (click)="item.notEstado = false; borrarNotificacion(index)"
+                          [ngClass]="{
+                            'pull-right': true,
+                            'semi-bold':true
+                            }">
+                      <span>
+                        <i class="fa fa-ban"></i>
+                      </span>
+                </span>
+                <span class="pull-right semi-bold"  style="padding-right: 15px;" (click)="redirectTo($event, item);" *ngIf="item.notReferenciaDocumentoCodigo"
+                          [ngClass]="{
+                            'pull-right': true,
+                            'semi-bold':true
+                            }">
+                      <span>
+                        <i class="fa fa-external-link"></i>
+                      </span>
+                </span>
+                <span>{{item.notMensaje}}<br/>
+                  <span class="pull-right font-xs text-muted"><i>{{item.notFecha | date: 'medium'}}</i></span>
+                </span>
+            </span>
+          </li>
+      </ul>
+    </div>
+  <!-- end notification content -->
+
+  <!-- footer: refresh area -->
+  <span>
+    <button type="button" (click)="updateEvent(tipoNotificacionActual)"
+            class="btn btn-xs btn-default pull-right">
+        <i class="fa fa-refresh" *ngIf="!loading"></i>
+        <i class="fa fa-refresh fa-spin" *ngIf="loading"></i>
+        <span *ngIf="loading">loading...</span>
+    </button>
+    </span>
+  <!-- end footer -->
+</div>

@@ -1,0 +1,86 @@
+<header id="header" class="animated fadeInDown">
+  
+  <div id="logo-group">
+    <img style="margin-top: 15px;max-width: 100px;" src="assets/img/oncedev.png" alt="oncedev" />
+  </div>
+</header>
+<div id="main" role="main" class="animated fadeInDown">
+
+  <div id="content" class="container">
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-7 col-lg-8 hidden-xs hidden-sm">
+        <h1 class="txt-color-blue login-header-big">{{app_name}}</h1>
+        <div class="row">
+          <carousel interval="5000"
+                        [noWrap]="true">
+                <slide>
+                  <img src="assets/img/cover.png" style="margin:auto;width: 100%;" >
+                </slide>
+                <slide>
+                  <img src="assets/img/cover.png" style="margin:auto;width: 100%;" >
+                </slide>
+                <slide>
+                  <img src="assets/img/cover.png" style="margin:auto;width: 100%;" >
+                </slide>
+                <div class="carousel-caption">
+                    <p>{{app_name}}</p>
+                </div>
+          </carousel>
+        </div>
+        <div class="row">
+          <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <h5 class="about-heading">Yachay EP</h5>
+
+            <p>
+              Dirección:
+              <br>
+              Teléfono:
+            </p>
+          </div>
+          <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <h5 class="about-heading">Dirección de Sistemas</h5>
+
+            <p>
+              Dirección:
+              <br>
+              Teléfono:
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-12 col-md-5 col-lg-4" style="padding-top:45px">
+        <h5 class="text-center">- ACCESO AL SISTEMA -</h5>
+        <p>Accede a los sistemas mediante 
+          <a target="_blank" href="http://yaccounts.yachay.gob.ec">YACHAY AUTH</a>,
+           recuedar que necesitas una cuenta.</p>
+        <ul class="list-inline text-center">
+          <li style="padding-top:25px;width: 100%" *ngIf="!procesandoToken">
+            <button *ngIf="!existToken" type="button" class="btn btn-labeled btn-primary" (click)="doLogin()">
+              <span class="btn-label">
+                <i class="fa fa-users"></i>
+              </span>ACCEDE MEDIANTE  YAUTH
+            </button>
+            <button *ngIf="existToken" type="button" class="btn btn-labeled btn-primary"
+             (click)="doRefresh()">
+              <span class="btn-label">
+                <i class="fa fa-user"></i>
+              </span>CONTINUAR COMO <b>{{usuario}}</b>
+            </button>
+            <br>
+            <br>
+            <button *ngIf="existToken" type="button" class="btn btn-labeled btn-danger" (click)="doLogout()">
+              <span class="btn-label">
+                <i class="fa fa-power-off"></i>
+              </span>CAMBIAR DE USUARIO
+            </button>
+          </li>
+
+          <li style="padding-top:25px;width: 100%" *ngIf="procesandoToken">
+            <h5><i class="fa fa-gear fa-spin"></i> Verificando datos de usuario ...</h5>
+          </li>
+
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

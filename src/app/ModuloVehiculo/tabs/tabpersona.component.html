@@ -1,0 +1,40 @@
+<sa-widget [collapsed]="false" [deletebutton]="false" [togglebutton]="false" [editbutton]="false" [fullscreenbutton]="false"
+  [custombutton]="false" [sortable]="false" [colorbutton]="false">
+  <header>
+    <ul class="nav nav-tabs pull-left in">
+      <li [class.active]="tab=='uno'">
+        <a (click)="tab = 'uno'"> <i class="fa fa-lg fa-user"></i> <span class="hidden-mobile hidden-tablet"> Tab 1 </span> </a>
+      </li>
+      <li [class.active]="tab=='hr2'">
+        <a (click)="tab = 'hr2'"> <i class="fa fa-lg fa-phone"></i> <span class="hidden-mobile hidden-tablet"> Tab 2</span>
+        </a>
+      </li>
+      <li [class.active]="tab=='for'">
+        <a (click)="tab = 'for'"> <i class="fa fa-lg fa-bookmark"></i> <span class="hidden-mobile hidden-tablet"> Tab 3</span>
+        </a>
+      </li>
+      <li [class.active]="tab=='nac'">
+        <a (click)="tab = 'nac'"> <i class="fa fa-lg fa-globe"></i> <span class="hidden-mobile hidden-tablet"> Tab 4</span>
+        </a>
+      </li>
+    </ul>
+  </header>
+  <div>
+    <div class="widget-body">
+      <tabset>
+        <tab [active]="tab == 'uno'">
+         <app-tab1></app-tab1>
+        </tab>
+        <tab [active]="tab == 'hr2'">
+          <app-tab2></app-tab2>
+        </tab>
+        <tab [active]="tab == 'for'">
+          <app-tab3></app-tab3>
+        </tab>
+        <tab [active]="tab == 'nac'">
+          <app-tab4></app-tab4>
+        </tab>
+      </tabset>
+    </div>
+  </div>
+  </sa-widget>

@@ -1,0 +1,23 @@
+<aside id="left-panel">
+
+  <!-- User info -->
+  <fbg-login-info></fbg-login-info>
+  <!-- end user info -->
+
+  <nav>
+    <!-- NOTE: Notice the gaps after each icon usage <i></i>..
+    Please note that these links work a bit different than
+    traditional href="" links. See documentation for details.
+    -->
+
+    <ul saSmartMenu *ngIf="!cargandoMenu">
+        <li routerLinkActive="active">
+            <a routerLink="/vehiculo" title="Home">
+                <i class="fa fa-lg fa-fw fa-home"></i> <span class="menu-item-parent">{{'Inicio'}}</span></a>
+        </li>
+    </ul>
+  </nav>
+
+  <sa-minify-menu></sa-minify-menu>
+
+</aside>

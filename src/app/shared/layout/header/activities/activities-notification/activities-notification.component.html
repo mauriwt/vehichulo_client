@@ -1,0 +1,15 @@
+<span class="padding-10">
+  
+  <span class="pull-right semi-bold" (click)="item.notEstado = false"
+              [ngClass]="{
+                'pull-right': true,
+                'semi-bold':true
+                }">
+          <span>
+            <i class="{{icon}}"></i>
+          </span>
+        </span>
+  <span>{{item.notMensaje}}<br/>
+    <span class="pull-right font-xs text-muted"><i>{{item.notFecha | date: 'medium'}}</i></span>
+  </span>
+</span>
